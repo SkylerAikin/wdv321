@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WDV321 Advanced JavaScript</title>
+    <style>
+        #container {
+            background-color: blanchedalmond;
+            width:70%;
+            margin-left:auto;
+            margin-right:auto;
+            padding:5px;
+        }
+
+        section {
+            display:flex;
+            justify-content: center;
+        }
+
+        .leftSide, .rightSide {
+            border:thin solid brown;
+            width:50%;
+            padding-left:15px;
+        }
+
+    </style>
+    <script>
+
+        const teamNames = ["Chiefs","Raiders","Cubs"];
+        const cookies = ["Chocolate Chip Cookie", "Sugar Cookie", "Peanut Butter Cookie"];
+        const candies = ["M&Ms","Baby Ruth","Snickes"];
+
+    </script>
+</head>
+<body>
+    <div id="container">
+        <header>
+
+        </header>
+        <main>
+            <h1>WDV321 Advanced JavaScript</h1>
+            <h2>Dynamic Content - Drop Down Lists</h2>
+            <p>The goals of this assignment:
+                <ol>
+                    <li>Demonstrate how to dynamically populate a select element using the document.write() technique</li>
+                    <li>Demonstrate how to dynamically populate a select element using the createElement() technique</li>
+                    <li>Demonstrate how to dynamically add an option to a select element</li>
+                    <li>Demonstrate how to dynamically change the options of a select element</li>
+                </ol>
+            </p>
+
+            <section>
+                <div class="leftSide">
+                    <h3>Team Names</h3>
+                    <div>
+                        <label for="teamNames">Team Names</label>
+                        <select name="teamNames" id="teamNames">
+                            <option value="">Select a team</option>
+                            <script>
+                                for (let i = 0; i < teamNames.length; i++) {
+                                    document.write('<option value="' + teamNames[i] + '">' + teamNames[i] + '</option>');
+                                }
+                            </script>
+                        </select>
+                        <p>Team Name: <span id="outputName"></span></p>
+                    </div>
+                    <div>
+                        <form method="post" action="#">
+                            <label for="newTeamName">New Team Name: </label>
+                            <input type="text" name="newTeamName" id="newTeamName">
+                        </form>
+                        <p>
+                            <input type="button" value="Add Team Name" id="btnAddTeam">
+                            <input type="button" value="Reset" id="btnResetLeft">
+                        </p>
+                    </div>
+                    <div>
+                        <h4>Instructions:</h4>
+                        <ol>
+                            <li>Use document.write() and the teamNames array to populate the teamNames select element.</li>
+                            <li>When a team is selected display the selected name next to 'Team Name:'' on the page.</li>
+                            <li>When the Add Team Name button is clicked add the name entered in the textfield to the teamNames select element.</li>
+                            <li>The reset button should reset the fields to their original values.</li>
+
+                        </ol>
+                    </div>
+                </div>
+                <div class="rightSide">
+                    <h3>Cookies or Candy?</h3>
+                    <div>
+                        <label for="productDisplay">Products: </label>
+                        <select name="productDisplay" id="productDisplay">
+                            <option value="none">Select a Product</option>
+                        </select>
+                        <p>
+                            Selected Product: <span id="outputProduct"></span>
+                        </p>
+                    </div>
+                    <p>
+                        <label for="displayCookies">Cookies: </label>
+                        <input type="radio" name="chooseProduct" id="displayCookies">
+                        <br>
+                        <label for="displayCandy">Candy: </label>
+                        <input type="radio" name="chooseProduct" id="displayCandy">
+                    </p>
+                    <div>
+                        <p><input type="button" value="Reset" id="btnResetRight"></p>
+                    </div>
+                    <div>
+                        <h4>Instructions:</h4>
+                        <ol>
+                            <li>Use the createElement() technique and the cookies array to populate the productDisplay select element.</li>
+                            <li>When a product is selected is selected, display the selected name next to 'Selected Product:'' on the page.</li>
+                            <li>Change the contents of the productDisplay based on which radio button is selected.</li>
+                            <li>The reset button should reset the fields to their original values.</li>
+                        </ol>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+        <footer>
+
+        </footer>
+    </div>
+<script>
+    const selectTeam = document.getElementById('teamNames');
+    const outputName = document.getElementById('outputName');
+    const newTeamInput = document.getElementById('newTeamName');
+    const btnAddTeam = document.getElementById('btnAddTeam');
+    const btnResetLeft = document.getElementById('btnResetLeft');
+
+    const selectProduct = document.getElementById('productDisplay');
+    const outputProduct = document.getElementById('outputProduct');
+    const radioCookies = document.getElementById('displayCookies');
+    const radioCandy = document.getElementById('displayCandy');
+    const btnResetRight = document.getElementById('btnResetRight');
+
+    // When a team is selected display the selected name next to 'Team Name:'' on the page.
+    selectTeam.addEventListener('change', function() {
+        outputName.textContent = selectTeam.value;
+    });
+
+    // When the Add Team Name button is clicked add the name entered in the textfield to the teamNames select element.
+    btnAddTeam.addEventListener('click', function() {
+        const teamNameText = newTeamInput.value.trim();
+        if (teamNameText !== "") {
+            const newOption = document.createElement("option");
+            newOption.value = teamNameText;
+            newOption.textContent = teamNameText;
+            selectTeam.appendChild(newOption);
+            newTeamInput.value = "";
+        }
+    });
+
+    // The reset button should reset the fields to their original values
+    btnResetLeft.addEventListener('click', function() {
+        selectTeam.innerHTML = '<option value="">Select a team</option>';
+        for (let i = 0; i < teamNames.length; i++) {
+            const opt = document.createElement('option');
+            opt.value = teamNames[i];
+            opt.textContent = teamNames[i];
+            selectTeam.appendChild(opt);
+        }
+        newTeamInput.value = "";
+        outputName.textContent = "";
+    });
+    // Use the createElement() technique and the cookies array to populate the productDisplay select element.
+    function populateProducts(arrayItems) {
+        selectProduct.innerHTML = '<option value="none">Select a Product</option>';
+        
+        arrayItems.forEach(function(item) {
+            const optionElement = document.createElement('option');
+            optionElement.value = item;
+            optionElement.textContent = item;
+            selectProduct.appendChild(optionElement);
+        });
+    }
+
+    populateProducts(cookies);
+
+    // When a product is selected is selected, display the selected name next to 'Selected Product:'' on the page
+    selectProduct.addEventListener('change', function() {
+        if(selectProduct.value === 'none') {
+            outputProduct.textContent = "";
+        } else {
+            outputProduct.textContent = selectProduct.value;
+        }
+    });
+
+    // Change the contents of the productDisplay based on which radio button is selected.
+    radioCookies.addEventListener('change', function() {
+        if (radioCookies.checked) {
+            populateProducts(cookies);
+            outputProduct.textContent = "";
+        }
+    });
+
+    radioCandy.addEventListener('change', function() {
+        if (radioCandy.checked) {
+            populateProducts(candies);
+            outputProduct.textContent = "";
+        }
+    });
+
+    // The reset button should reset the fields to their original values.
+    btnResetRight.addEventListener('click', function() {
+        radioCookies.checked = true;
+        populateProducts(cookies);
+        outputProduct.textContent = "";
+    });
+</script>
+</body>
+</html>
