@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+    <body>
+        <script>
+            const selectList = document.createElement('select');
+            selectList.id = 'myDropdown';
+
+            const optionsData = [
+            ['Select an option...', '', true],
+            ['Option 1', 'opt1', false],
+            ['Option 2', 'opt2', false]
+            ];
+
+            optionsData.forEach(([text, value, isDefault]) => {
+                const option = document.createElement('option');
+                option.text = text;
+                option.value = value;
+                option.selected = isDefault;
+                selectList.appendChild(option);
+            });
+
+
+            const radioContainer = document.createElement('div');
+
+            const radioData = [
+            { id: 'radio1', value: 'apple', label: 'Apple' },
+            { id: 'radio2', value: 'banana', label: 'Banana' },
+            { id: 'radio3', value: 'cherry', label: 'Cherry' }
+            ];
+
+            radioData.forEach(item => {
+                const radioButton = document.createElement('input');
+                radioButton.type = 'radio';
+                radioButton.id = item.id;
+                radioButton.value = item.value;
+                radioButton.name = 'fruitGroup'; 
+
+                const label = document.createElement('label');
+                label.htmlFor = item.id;
+                label.textContent = item.label;
+                label.style.marginRight = '15px';
+                label.style.marginLeft = '5px';
+
+                radioContainer.appendChild(radioButton);
+                radioContainer.appendChild(label);
+            });
+
+
+            const formattedDiv = document.createElement('div');
+            formattedDiv.textContent = 'This is a formmatted div element with content.';
+
+            formattedDiv.style.padding = '15px';
+            formattedDiv.style.backgroundColor = 'lightblue';
+            formattedDiv.style.border = '2px solid black';
+            formattedDiv.style.borderRadius = '8px';
+            formattedDiv.style.color = '#333';
+            formattedDiv.style.fontFamily = 'Arial, sans-serif';
+            formattedDiv.style.marginTop = '20px';
+
+
+            document.body.appendChild(selectList);
+            document.body.appendChild(radioContainer);
+            document.body.appendChild(formattedDiv);
+        </script>
+    </body>
+</html>
